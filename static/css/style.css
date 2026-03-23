@@ -1,0 +1,14 @@
+body {
+    background: linear-gradient(135deg, #facc15 50%, #ffb703 100%);
+    min-height: 100vh;
+}
+
+/* .card {
+    border-radius: 12px;
+    border-top: 4px solid #facc15;
+} */
+.card {
+    border-radius: 12px;
+    border-top: 4px solid #facc15;
+    background-color: #ffffff;
+}
