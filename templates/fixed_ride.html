@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+
+        <div class="card shadow p-4">
+
+            <h4 class="text-center text-dark mb-4">
+                Fixed Ride Booking
+            </h4>
+
+            <form method="POST" action="/select-car">
+
+                <div class="mb-3">
+                    <label class="form-label text-dark">Pickup</label>
+                    <input type="text" name="pickup" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label text-dark">Destination</label>
+                    <input type="text" name="destination" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label text-dark">Date</label>
+                    <input type="date" name="date" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label text-dark">Time</label>
+                    <input type="time" name="time" class="form-control" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">
+                    Book Ride
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

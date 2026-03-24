@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between mb-3">
+        <h4 class="text-dark">Types of Car</h4>
+        <a href="/fixed-ride" class="btn btn-sm btn-outline-dark">⬅ Back</a>
+    </div>
+
+    <div class="card p-3 shadow">
+
+        <!-- Sedan -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <strong>Sedan</strong><br>
+                <span>₹400</span>
+            </div>
+            <form method="POST" action="/book/sedan">
+                <button class="btn btn-warning btn-sm">Book</button>
+            </form>
+        </div>
+
+        <!-- SUV -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <strong>SUV</strong><br>
+                <span>₹600</span>
+            </div>
+            <button class="btn btn-secondary btn-sm" disabled>Book</button>
+        </div>
+
+        <!-- Electric -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <strong>Electric</strong><br>
+                <span>₹500</span>
+            </div>
+            <button class="btn btn-secondary btn-sm" disabled>Book</button>
+        </div>
+
+        <!-- Mini -->
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <strong>Mini</strong><br>
+                <span>₹375</span>
+            </div>
+            <button class="btn btn-secondary btn-sm" disabled>Book</button>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

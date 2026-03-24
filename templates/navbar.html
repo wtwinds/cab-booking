@@ -1,13 +1,25 @@
 <nav class="navbar navbar-dark bg-dark px-4 shadow">
-    <a class="navbar-brand fw-bold" href="/">
+    <a class="navbar-brand fw-bold" href="/dashboard">
         <i class="bi bi-taxi-front-fill text-warning"></i> Cab Booking
     </a>
 
     <div>
-        {% if session.user %}
+
         <span class="text-white me-3">
             <i class="bi bi-person-circle"></i> {{ session.user }}
         </span>
+
+        {% if request.path in ['/fixed-ride', '/spot-ride'] %}
+        <!-- Back to Dashboard button -->
+        <a href="/dashboard" class="btn btn-warning btn-sm me-2">
+            <i class="bi bi-arrow-left"></i> Dashboard
+        </a>
+        {% endif %}
+
+        {% if session.user %}
+        <!-- <span class="text-white me-3">
+            <i class="bi bi-person-circle"></i> {{ session.user }}
+        </span> -->
         <a href="/logout" class="btn btn-danger btn-sm">
             Logout
         </a>
@@ -19,5 +31,6 @@
             Register
         </a>
         {% endif %}
+
     </div>
 </nav>

@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row g-4">
+
+    <!-- LEFT MAP -->
+    <div class="col-md-7">
+        <div id="map" class="map-box"></div>
+    </div>
+
+    <!-- RIGHT INFO -->
+    <div class="col-md-5">
+
+        <div class="card p-3 mb-3 shadow ride-card">
+            <h5 class="fw-bold">{{ car|capitalize }} Ride</h5>
+            <p><strong>Fare:</strong> ₹{{ price }}</p>
+            <p><strong>Pickup:</strong> {{ ride.pickup }}</p>
+            <p><strong>Destination:</strong> {{ ride.destination }}</p>
+        </div>
+
+        <div class="card p-3 mb-3 shadow ride-card">
+            <h6 class="fw-bold">Driver Details</h6>
+            <p><strong>Name:</strong> {{ driver.name }}</p>
+            <p><strong>Phone:</strong> {{ driver.phone }}</p>
+        </div>
+
+        <div class="text-center mt-3">
+            <a href="/cancel" class="btn btn-danger px-4">Cancel</a>
+            <a href="/complete" class="btn btn-success px-4 ms-2">Complete</a>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ✅ MAP SCRIPT -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        let pickupText = "{{ ride.pickup }}";
+        let destinationText = "{{ ride.destination }}";
+
+        // 🔥 Convert address → lat/lng
+        async function getCoords(place) {
+            let res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${place}`);
+            let data = await res.json();
+
+            if (data.length > 0) {
+                return [parseFloat(data[0].lat), parseFloat(data[0].lon)];
+            } else {
+                return null;
+            }
+        }
+
+        async function initMap() {
+
+            let pickup = await getCoords(pickupText);
+            let destination = await getCoords(destinationText);
+
+            // fallback (agar fail ho gaya)
+            if (!pickup) pickup = [18.5204, 73.8567];
+            if (!destination) destination = [18.6400, 73.7500];
+
+            var map = L.map('map').setView(pickup, 10);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: 'OpenStreetMap'
+            }).addTo(map);
+
+            // markers
+            L.marker(pickup).addTo(map)
+                .bindPopup("Pickup: " + pickupText)
+                .openPopup();
+
+            L.marker(destination).addTo(map)
+                .bindPopup("Destination: " + destinationText);
+
+            // route line
+            var route = L.polyline([pickup, destination], {
+                color: 'blue',
+                weight: 4
+            }).addTo(map);
+
+            map.fitBounds(route.getBounds());
+
+            setTimeout(() => {
+                map.invalidateSize();
+            }, 300);
+        }
+
+        initMap();
+
+    });
+</script>
+
+{% endblock %}
