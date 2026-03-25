@@ -6,7 +6,7 @@
 
     <div class="d-flex justify-content-between mb-3">
         <h4 class="text-dark">Types of Car</h4>
-        <a href="/fixed-ride" class="btn btn-sm btn-outline-dark">⬅ Back</a>
+        <a href="/spot-ride" class="btn btn-sm btn-outline-dark">⬅ Back</a>
     </div>
 
     <div class="card p-3 shadow">
@@ -28,7 +28,9 @@
                 <strong>SUV</strong><br>
                 <span>₹600</span>
             </div>
-            <button class="btn btn-secondary btn-sm" disabled>Book</button>
+            <form method="POST" action="/book/suv">
+                <button class="btn btn-warning btn-sm">Book</button>
+            </form>
         </div>
 
         <!-- Electric -->
@@ -37,7 +39,9 @@
                 <strong>Electric</strong><br>
                 <span>₹500</span>
             </div>
-            <button class="btn btn-secondary btn-sm" disabled>Book</button>
+            <form method="POST" action="/book/electric">
+                <button class="btn btn-warning btn-sm">Book</button>
+            </form>
         </div>
 
         <!-- Mini -->
@@ -46,7 +50,9 @@
                 <strong>Mini</strong><br>
                 <span>₹375</span>
             </div>
-            <button class="btn btn-secondary btn-sm" disabled>Book</button>
+            <form method="POST" action="/book/mini">
+                <button class="btn btn-warning btn-sm">Book</button>
+            </form>
         </div>
 
     </div>

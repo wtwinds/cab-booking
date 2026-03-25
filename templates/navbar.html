@@ -5,31 +5,26 @@
 
     <div>
 
-        <!-- <span class="text-white me-3">
-            <i class="bi bi-person-circle"></i> {{ session.user }}
-        </span> -->
-
-        {% if request.path in ['/fixed-ride', '/spot-ride'] %}
-        <!-- Back to Dashboard button -->
+        <!-- ✅ Always show Dashboard button except on dashboard -->
+        {% if request.path != '/dashboard' %}
         <a href="/dashboard" class="btn btn-warning btn-sm me-2">
             <i class="bi bi-arrow-left"></i> Dashboard
         </a>
         {% endif %}
 
+        <!-- ✅ Add History in navbar -->
+        <a href="/history" class="btn btn-outline-light btn-sm me-2">
+            <i class="bi bi-clock-history"></i> History
+        </a>
+
         {% if session.user %}
         <span class="text-white me-3">
             <i class="bi bi-person-circle"></i> {{ session.user }}
         </span>
-        <a href="/logout" class="btn btn-danger btn-sm">
-            Logout
-        </a>
+        <a href="/logout" class="btn btn-danger btn-sm">Logout</a>
         {% else %}
-        <a href="/" class="btn btn-outline-light btn-sm me-2">
-            Login
-        </a>
-        <a href="/register" class="btn btn-warning btn-sm">
-            Register
-        </a>
+        <a href="/" class="btn btn-outline-light btn-sm me-2">Login</a>
+        <a href="/register" class="btn btn-warning btn-sm">Register</a>
         {% endif %}
 
     </div>

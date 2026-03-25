@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+
+        <div class="card shadow p-4 text-dark">
+
+            <h3 class="text-center mb-3">Rate Your Ride ⭐</h3>
+
+            <form method="POST" action="/submit-rating">
+
+                <div class="mb-3 text-center">
+                    <label class="form-label">Rating</label>
+                    <select name="rating" class="form-control text-center">
+                        <option value="5">⭐⭐⭐⭐⭐</option>
+                        <option value="4">⭐⭐⭐⭐</option>
+                        <option value="3">⭐⭐⭐</option>
+                        <option value="2">⭐⭐</option>
+                        <option value="1">⭐</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label>Feedback</label>
+                    <textarea name="feedback" class="form-control" placeholder="Tell us about your ride..."></textarea>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <a href="/dashboard" class="btn btn-secondary">Skip</a>
+                    <button class="btn btn-primary">Submit</button>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

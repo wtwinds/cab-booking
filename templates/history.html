@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h3 class="mb-4 text-center">Ride History 🚖</h3>
+
+    <a href="/dashboard" class="btn btn-secondary">
+        Back
+    </a>
+    {% if rides %}
+
+    {% for ride in rides %}
+    <div class="card mb-3 shadow p-3">
+
+        <div class="d-flex justify-content-between">
+
+            <div>
+                <h5>{{ ride.car|capitalize }} - ₹{{ ride.price }}</h5>
+
+                <p><b>Pickup:</b> {{ ride.pickup }}</p>
+                <p><b>Destination:</b> {{ ride.destination }}</p>
+                <p><b>Date:</b> {{ ride.date }} | {{ ride.time }}</p>
+
+                <p>
+                    <b>Status:</b>
+                    {% if ride.status == 'completed' %}
+                    <span class="text-success">Completed ✅</span>
+                    {% elif ride.status == 'cancelled' %}
+                    <span class="text-danger">Cancelled ❌</span>
+                    {% else %}
+                    <span class="text-warning">Ongoing ⏳</span>
+                    {% endif %}
+                </p>
+
+                {% if ride.rating %}
+                <p><b>Rating:</b> ⭐ {{ ride.rating }}</p>
+                {% endif %}
+
+            </div>
+
+            <!-- DELETE BUTTON -->
+            <div class="d-flex align-items-start">
+                <a href="/delete-ride/{{ ride._id }}" class="btn btn-sm btn-danger"
+                    onclick="return confirm('Delete this ride?')">
+                    Delete
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+    {% endfor %}
+
+    {% else %}
+
+    <p class="text-center">No ride history found 😢</p>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}
