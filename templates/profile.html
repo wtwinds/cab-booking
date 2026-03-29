@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="card shadow p-4">
+
+        <h3 class="mb-4 text-center">Profile Management 👤</h3>
+
+        <form method="POST" action="/update-profile">
+
+            <div class="mb-3">
+                <label>Full Name</label>
+                <input type="text" name="full_name" class="form-control" value="{{ user.full_name or '' }}">
+            </div>
+
+            <div class="mb-3">
+                <label>Employee ID</label>
+                <input type="text" name="employee_id" class="form-control" value="{{ user.employee_id or '' }}">
+            </div>
+
+            <div class="mb-3">
+                <label>Phone</label>
+                <input type="text" name="phone" class="form-control" value="{{ user.phone or '' }}">
+            </div>
+
+            <div class="mb-3">
+                <label>Department</label>
+                <input type="text" name="department" class="form-control" value="{{ user.department or '' }}">
+            </div>
+
+            <div class="mb-3">
+                <label>Home Address</label>
+                <input type="text" name="home_address" class="form-control" value="{{ user.home_address or '' }}">
+            </div>
+
+            <div class="mb-3">
+                <label>Office Address</label>
+                <input type="text" name="office_address" class="form-control" value="{{ user.office_address or '' }}">
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="/dashboard" class="btn btn-secondary px-4">⬅ Back</a>
+                <button type="submit" class="btn btn-success px-4 ms-2">
+                    Confirm Changes
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

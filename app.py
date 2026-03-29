@@ -10,6 +10,7 @@ client = MongoClient(MONGO_URI)
 db = client['cab_booking']
 users = db['users']
 rides = db['rides']
+profiles=db['profiles']
 
 # 🔥 DRIVER DATA
 drivers = {
@@ -164,7 +165,8 @@ def book_ride(car_type):
         "car": car_type,
         "price": fare.get(car_type),
         "driver": driver,
-        "status": "ongoing"
+        "status": "ongoing",
+        "type": ride.get("ride_type", "spot")
     }
 
     rides.insert_one(ride_data)
@@ -229,7 +231,7 @@ def cancel_confirm():
             }
         )
 
-    flash("Ride Cancelled Successfully ❌")
+    flash("Ride Cancelled Successfully")
     return redirect('/dashboard')
 
 # ---------- COMPLETE ----------
@@ -280,7 +282,7 @@ def submit_rating():
             }
         )
 
-    flash("Thanks for your feedback ⭐")
+    flash("Thanks for your feedback")
     return redirect('/dashboard')
 
 #---History--------------------
@@ -305,8 +307,80 @@ def delete_ride(ride_id):
 
     rides.delete_one({"_id": ObjectId(ride_id)})
 
-    flash("Ride deleted successfully 🗑️")
+    flash("Ride deleted successfully")
     return redirect('/history')
+
+# ---------- PROFILE PAGE ----------
+@app.route('/profile')
+def profile():
+    if 'user' not in session:
+        return redirect('/')
+
+    user_profile = profiles.find_one({"user": session['user']}) or {}
+    return render_template("profile.html", user=user_profile)
+
+
+# ---------- SAVE PROFILE ----------
+@app.route('/update-profile', methods=['POST'])
+def update_profile():
+    if 'user' not in session:
+        return redirect('/')
+
+    profiles.update_one(
+        {"user": session['user']},
+        {
+            "$set": {
+                "user": session['user'],
+                "full_name": request.form.get("full_name"),
+                "employee_id": request.form.get("employee_id"),
+                "phone": request.form.get("phone"),
+                "department": request.form.get("department"),
+                "home_address": request.form.get("home_address"),
+                "office_address": request.form.get("office_address")
+            }
+        },
+        upsert=True
+    )
+
+    flash("Profile Updated")
+    return redirect('/dashboard')
+
+# ---------- FIXED RIDE PAGE ----------
+@app.route('/fixed-ride')
+def fixed_ride():
+    if 'user' not in session:
+        return redirect('/')
+
+    return render_template("fixed_ride.html")
+
+# ---------- FIXED RIDE CHECK ----------
+@app.route('/fixed-ride-check', methods=['POST'])
+def fixed_ride_check():
+    if 'user' not in session:
+        return redirect('/')
+
+    user_profile = profiles.find_one({"user": session['user']})
+
+    # profile not filled
+    if not user_profile or not user_profile.get("home_address") or not user_profile.get("office_address"):
+        flash("⚠ Please complete your profile first!")
+        return redirect('/profile')
+
+    pickup_type = request.form['pickup']
+    destination_type = request.form['destination']
+
+    pickup = user_profile.get("home_address") if pickup_type == "home" else user_profile.get("office_address")
+    destination = user_profile.get("home_address") if destination_type == "home" else user_profile.get("office_address")
+
+    session['ride'] = {
+        "pickup": pickup,
+        "destination": destination,
+        "date": request.form['date'],
+        "time": request.form['time'],
+        "ride_type": "fixed"  
+    }
+
+    return render_template("select_car.html")
 
 # ---------- LOGOUT ----------
 @app.route('/logout')

@@ -2,45 +2,53 @@
 
 {% block content %}
 
-<div class="row justify-content-center">
-    <div class="col-md-6">
+<div class="container mt-4">
 
-        <div class="card shadow p-4">
+    <div class="card p-4 shadow">
 
-            <h4 class="text-center text-dark mb-4">
-                Fixed Ride Booking
-            </h4>
-
-            <form method="POST" action="/select-car">
-
-                <div class="mb-3">
-                    <label class="form-label text-dark">Pickup</label>
-                    <input type="text" name="pickup" class="form-control" required>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label text-dark">Destination</label>
-                    <input type="text" name="destination" class="form-control" required>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label text-dark">Date</label>
-                    <input type="date" name="date" class="form-control" required>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label text-dark">Time</label>
-                    <input type="time" name="time" class="form-control" required>
-                </div>
-
-                <button type="submit" class="btn btn-primary w-100">
-                    Book Ride
-                </button>
-
-            </form>
-
+        <div class="d-flex justify-content-between">
+            <h4 class="text-center w-100">Fixed Ride Booking</h4>
         </div>
 
+        <form method="POST" action="/fixed-ride-check">
+
+            <!-- Pickup -->
+            <div class="mb-3 mt-4">
+                <label><i class="bi bi-geo-alt"></i> Pickup</label>
+                <select name="pickup" class="form-control" required>
+                    <option value="">Select</option>
+                    <option value="home">Home</option>
+                    <option value="office">Office</option>
+                </select>
+            </div>
+
+            <!-- Destination -->
+            <div class="mb-3">
+                <label><i class="bi bi-flag"></i> Destination</label>
+                <select name="destination" class="form-control" required>
+                    <option value="">Select</option>
+                    <option value="home">Home</option>
+                    <option value="office">Office</option>
+                </select>
+            </div>
+
+            <!-- Time -->
+            <div class="mb-3">
+                <label><i class="bi bi-clock"></i> Time</label>
+                <input type="time" name="time" class="form-control" required>
+            </div>
+
+            <!-- Date -->
+            <div class="mb-3">
+                <label><i class="bi bi-calendar"></i> Date</label>
+                <input type="date" name="date" class="form-control" required>
+            </div>
+
+            <div class="text-center mt-4">
+                <button class="btn btn-success px-4">Book Ride</button>
+                <a href="/profile" class="btn btn-secondary px-4 ms-2">Set Profile</a>
+            </div>
+        </form>
     </div>
 </div>
 
