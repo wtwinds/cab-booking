@@ -7,10 +7,11 @@ app = Flask(__name__)
 app.secret_key = SECRET_KEY
 
 client = MongoClient(MONGO_URI)
-db = client['cab_booking']
+db = client.get_default_database()
+
 users = db['users']
 rides = db['rides']
-profiles=db['profiles']
+profiles = db['profiles']
 
 # 🔥 DRIVER DATA
 drivers = {
